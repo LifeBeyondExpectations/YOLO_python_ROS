@@ -19,6 +19,7 @@ using namespace cv::dnn;
 /*jaesungChoe*/
 //#include <opencv2/opencv.hpp>
 
+#include "opencv2/core/version.hpp"
 
 using namespace std;
 
@@ -45,6 +46,8 @@ const char* params
 
 int main(int argc, char** argv)
 {
+    printf("fuck : %d.%d.%d \n",CV_MAJOR_VERSION,CV_MINOR_VERSION, CV_SUBMINOR_VERSION);
+
     CommandLineParser parser(argc, argv, params);
 
     if (parser.get<bool>("help"))

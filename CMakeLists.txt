@@ -2,15 +2,18 @@ cmake_minimum_required(VERSION 2.8.3)
 project(yolo)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
- add_compile_options(-std=c++11)
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+add_compile_options(-std=c++11)
+#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
 #set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
-set(opencv_INCLUDE_DIRS ${opencv_INCLUDE_DIRS} /usr/local/include/opencv)
-set(opencv_LIBRARIES ${opencv_LIBRARIES} /usr/local/lib)
+#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} /home/jaesungchoe/opencv/opencv)
+set(OpenCV_INCLUDE_DIRS ${OpenCV_INCLUDE_DIRS} "/usr/local/include/opencv")
+set(OpenCV_LIBRARIES ${OpenCV_LIBRARIES} "/usr/local/lib")
+#set(OpenCV_DIR ${OpenCV_DIR} /home/jaesungchoe/opencv/opencv)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
+
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
@@ -18,11 +21,16 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   cv_bridge
   image_transport
-  OpenCV REQUIRED
+  )
+
+find_package(  
+  OpenCV 3.3.1 REQUIRED 
+  #core imgproc highgui PATHS /home/jaesungchoe/opencv/opencv/cmake
 )
+#set(OpenCV_LIBRARIES ${OpenCV_LIBRARIES} "/urs/local/lib")
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS system)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -76,10 +84,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
- generate_messages(
-   DEPENDENCIES
-   std_msgs
- )
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs
+# )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -114,7 +122,8 @@ catkin_package(
   INCLUDE_DIRS include
   LIBRARIES yolo
   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
-  DEPENDS system_lib opencv
+  #DEPENDS system_lib 
+  #OpenCV #3.3.1
 )
 
 ###########
@@ -125,14 +134,17 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
   include
-  ${catkin_INCLUDE_DIRS}
-  ${opencv_INCLUDE_DIRS}
+  #${catkin_INCLUDE_DIRS}
+  #"/usr/local/include/opencv"
+  ${OpenCV_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
 #add_library(
-#    ${PROJECT_NAME} ${${PROJECT_NAME}/src/yolo.cpp
-#)
+#    ${PROJECT_NAME} 
+    #${OpenCV_INCLUDE_DIRS} 
+    #${OpenCV_LIBRARIES}
+    #)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -156,9 +168,12 @@ add_executable(detect src/yolo.cpp)
 #add_dependencies(detect ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(detect
-    ${catkin_LIBRARIES} ${opencv_LIBRARIES}
-)
+target_link_libraries(detect 
+    #${catkin_LIBRARIES} 
+    #"/usr/local/lib")
+    ${OpenCV_LIBRARIES}
+    #${OpenCV_INCLUDE_DIR}
+    )
 
 #############
 ## Install ##
@@ -206,4 +221,10 @@ target_link_libraries(detect
 # endif()
 
 ## Add folders to be run by python nosetests
-# catkin_add_nosetests(test)
+# catkin_add_nosetests(test
+message('OpenCV_LIBRARIES below')
+MESSAGE(${OpenCV_LIBRARIES})
+MESSAGE('below is OpenCV_INCLUDE_DIRS')
+MESSAGE(${OpenCV_INCLUDE_DIRS})
+#message('below is OpenCV_LIBS')
+#message(${OpenCV_LIBS})
