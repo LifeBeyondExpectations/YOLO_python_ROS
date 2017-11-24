@@ -23,10 +23,7 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   )
 
-find_package(  
-  OpenCV 3.3.1 REQUIRED 
-  #core imgproc highgui PATHS /home/jaesungchoe/opencv/opencv/cmake
-)
+find_package(OpenCV 3.3.1 REQUIRED )#PATHS "/home/jaesungchoe/opencv/opencv/cmake")
 #set(OpenCV_LIBRARIES ${OpenCV_LIBRARIES} "/urs/local/lib")
 
 ## System dependencies are found with CMake's conventions
@@ -134,7 +131,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
   include
-  #${catkin_INCLUDE_DIRS}
+  ${catkin_INCLUDE_DIRS}
   #"/usr/local/include/opencv"
   ${OpenCV_INCLUDE_DIRS}
 )
@@ -155,7 +152,7 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 #add_executable(${PROJECT_NAME}_detect src/yolo.cpp)
-add_executable(detect src/yolo.cpp)
+#add_executable(detect src/yolo_imread.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -168,12 +165,7 @@ add_executable(detect src/yolo.cpp)
 #add_dependencies(detect ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(detect 
-    #${catkin_LIBRARIES} 
-    #"/usr/local/lib")
-    ${OpenCV_LIBRARIES}
-    #${OpenCV_INCLUDE_DIR}
-    )
+#target_link_libraries(detect ${OpenCV_LIBRARIES} )#${catkin_LIBRARIES} )
 
 #############
 ## Install ##
