@@ -1,4 +1,15 @@
 # YOLO + Python + ROS
+
+#How to run
+- do not have to download darknet, only use opencv
+
+1. download package in your catkin_ws directory
+2. catkin_make
+3. publish your own image with the topic 'camear/image_color' or just you can modify the topic in yolo.py 
+4. rosrun ${your package name} yolo.py
+5. rosrun image_view image_view image:=MyDarknet/image_annotated
+
+
 This code is to run YOLO with python + opencv3.3.1 on the ROS(Robotic Operating System)
 If you publish your own image with the topic "camera/image_color,
    then this package would re-publish the image-annotated with the topic "MyDarknet/img_annotated"
@@ -16,10 +27,3 @@ Github : https://github.com/opencv/opencv/blob/master/samples/dnn/yolo_object_de
 1. Opencv 3.3.1
 2. ROS-lunar
 3. python (version does not matter)
-
-#How to run
-1. download package in your catkin_ws directory
-2. catkin_make
-3. publish your own image with the topic 'camear/image_color' or just you can modify the topic in yolo.py 
-4. rosrun ${your package name} yolo.py
-5. rosrun image_view image_view image:=MyDarknet/image_annotated
