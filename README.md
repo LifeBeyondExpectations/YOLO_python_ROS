@@ -10,5 +10,4 @@ Site : https://pjreddie.com/darknet/yolo/
 Used Opencv
 Github : https://github.com/opencv/opencv/blob/master/samples/dnn/yolo_object_detection.cpp
 
-![Alt text](/YOLO_on_the_ROS/src/img_annotated.png?raw=true "origin image")
 ![Alt text](/src/img_annotated.png?raw=true "origin image")
